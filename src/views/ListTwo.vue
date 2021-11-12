@@ -18,14 +18,14 @@
               >{{ task.title }} {{ task.id }}</v-list-item-title
             >
           </v-list-item-content>
-          <v-btn icon color="red" @click="handleDelete(task.id)">
+          <v-btn icon color="primary" @click="handleDelete(task.id)">
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </template>
       </v-list-item>
     </v-list>
     <v-list flat v-else>
-      <v-subheader>There are no Completed Tasks</v-subheader>
+      <v-subheader>There are no Completed Tasks!</v-subheader>
     </v-list>
   </div>
 </template>

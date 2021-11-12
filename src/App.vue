@@ -1,14 +1,14 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar color="primary" app>
+    <v-app-bar color="primary" app class="d-flex flex-column align-center">
       <v-toolbar-title class="white--text"
         >Todo Condor - Daniel Morán</v-toolbar-title
       >
     </v-app-bar>
 
-    <v-main>
+    <v-main class="mt-10">
       <v-container>
-        <v-row>
+        <v-row class="d-flex flex-column align-center">
           <v-col cols="12" md="6">
             <v-text-field
               label="Input Task Name"
@@ -32,28 +32,78 @@
           </v-col>
         </v-row>
         <v-divider></v-divider>
-        <v-row>
+        <v-row class="d-flex flex-column align-center">
           <v-col cols="12" md="6">
             <!-- {{ listOne }} -->
             <list-one
               :listOne="listOne"
               @emitTaskId="handleDoneListOne($event)"
+              @emitDelete="handleDeleteOne($event)"
             />
           </v-col>
         </v-row>
         <v-divider></v-divider>
-        <v-row>
+        <v-row class="d-flex flex-column align-center">
           <v-col cols="12" md="6">
             <!-- {{ listTwo }} -->
             <list-two
               :listTwo="listTwo"
               @emitTaskId="handleDoneListTwo($event)"
-              @emitDelete="handleDeleteListTwo($event)"
+              @emitDelete="handleDelete($event)"
             />
           </v-col>
         </v-row>
       </v-container>
     </v-main>
+    <!-- dialogs -->
+    <template>
+      <v-row justify="center">
+        <v-dialog v-model="dialogDelete" persistent max-width="290">
+          <v-card>
+            <v-card-title class="text-h5">
+              Do you want to delete the task?
+            </v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="red darken-1" text @click="dialog('second', false)">
+                Disagree
+              </v-btn>
+              <v-btn
+                color="primary darken-1"
+                text
+                @click="dialog('second', true)"
+              >
+                Agree
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+    </template>
+    <template>
+      <v-row justify="center">
+        <v-dialog v-model="dialogDeleteOne" persistent max-width="290">
+          <v-card>
+            <v-card-title class="text-h5">
+              Do you want to delete the task?
+            </v-card-title>
+            <v-card-actions>
+              <v-spacer></v-spacer>
+              <v-btn color="red darken-1" text @click="dialog('first', false)">
+                Disagree
+              </v-btn>
+              <v-btn
+                color="primary darken-1"
+                text
+                @click="dialog('first', true)"
+              >
+                Agree
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
+      </v-row>
+    </template>
   </v-app>
 </template>
 
@@ -91,6 +141,9 @@ export default {
           done: true,
         },
       ],
+      dialogDelete: false,
+      dialogDeleteOne: false,
+      currentId: 0,
     };
   },
   methods: {
@@ -117,8 +170,31 @@ export default {
       this.listOne.push(newEntry);
       this.input = "";
     },
-    handleDeleteListTwo(id) {
-      alert(id);
+    handleDelete(id) {
+      this.currentId = id;
+      this.dialogDelete = true;
+    },
+    handleDeleteOne(id) {
+      this.currentId = id;
+      this.dialogDeleteOne = true;
+    },
+    dialog(list, option) {
+      if (list === "second") {
+        if (option) {
+          let resultOne = this.listTwo.filter(
+            (task) => task.id !== this.currentId
+          );
+          this.listTwo = resultOne;
+        }
+        this.dialogDelete = false;
+      }
+      if (list === "first") {
+        if (option) {
+          let resultOne = this.listOne.filter((task) => task.id !== this.currentId);
+          this.listOne = resultOne;
+        }
+        this.dialogDeleteOne = false;
+      }
     },
   },
   computed: {

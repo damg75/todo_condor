@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-list flat>
+    <v-list flat v-if="listTwo.length > 0">
       <v-subheader>Completed</v-subheader>
 
       <v-list-item v-for="task in listTwo" :key="task.id">
@@ -18,8 +18,14 @@
               >{{ task.title }} {{ task.id }}</v-list-item-title
             >
           </v-list-item-content>
+          <v-btn icon color="red" @click="handleDelete(task.id)">
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
         </template>
       </v-list-item>
+    </v-list>
+    <v-list flat v-else>
+      <v-subheader>There are no Completed Tasks</v-subheader>
     </v-list>
   </div>
 </template>
@@ -36,6 +42,9 @@ export default {
   methods: {
     handleNotDone(id) {
       this.$emit("emitTaskId", id);
+    },
+    handleDelete(id) {
+      this.$emit("emitDelete", id);
     },
   },
 };

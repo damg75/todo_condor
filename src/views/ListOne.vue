@@ -14,8 +14,13 @@
           </v-list-item-action>
 
           <v-list-item-content>
-            <v-list-item-title>{{ task.title }} {{task.id}}</v-list-item-title>
+            <v-list-item-title
+              >{{ task.title }} {{ task.id }}</v-list-item-title
+            >
           </v-list-item-content>
+          <v-btn icon color="red">
+            <v-icon>mdi-delete</v-icon>
+          </v-btn>
         </template>
       </v-list-item>
     </v-list>

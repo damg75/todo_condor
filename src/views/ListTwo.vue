@@ -18,6 +18,9 @@
               >{{ task.title }} {{ task.id }}</v-list-item-title
             >
           </v-list-item-content>
+          <v-btn icon color="primary" disabled>
+            <v-icon>mdi-pencil</v-icon>
+          </v-btn>
           <v-btn icon color="primary" @click="handleDelete(task.id)">
             <v-icon>mdi-delete</v-icon>
           </v-btn>

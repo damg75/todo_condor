@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-list flat v-if="listOne.length > 0">
-      <v-subheader>To-do List</v-subheader>
+      <v-subheader>To-do List <v-icon class="ml-2">mdi-format-list-checkbox</v-icon></v-subheader>
 
       <v-list-item v-for="task in listOne" :key="task.id">
         <template v-slot:default>
@@ -13,8 +13,8 @@
             ></v-checkbox>
           </v-list-item-action>
 
-          <v-list-item-content>
-            <v-list-item-title>{{ task.title }}</v-list-item-title>
+          <v-list-item-content >
+            <v-list-item-title class="hover" @click="handleDone(task.id)">{{ task.title }}</v-list-item-title>
           </v-list-item-content>
           <v-btn icon color="primary" @click="handleEdit(task.id)">
             <v-icon>mdi-pencil</v-icon>
@@ -83,4 +83,7 @@ export default {
   },
 };
 </script>
-<style></style>
+<style>
+.hover:hover{
+  cursor: pointer !important;
+}</style>

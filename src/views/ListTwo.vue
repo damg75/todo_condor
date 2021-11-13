@@ -14,7 +14,11 @@
           </v-list-item-action>
 
           <v-list-item-content >
-            <v-list-item-title class="hover" @click="handleNotDone(task.id)">{{ task.title }}</v-list-item-title>
+            <v-list-item-title
+              ><span class="hover" @click="handleNotDone(task.id)"
+                >{{ task.title }}
+              </span></v-list-item-title
+            >
           </v-list-item-content>
           <v-btn icon color="primary" disabled>
             <v-icon>mdi-pencil</v-icon>

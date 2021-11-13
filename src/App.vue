@@ -156,7 +156,7 @@ export default {
   components: { ListOne, ListTwo, FooterComp, headerComp },
   data() {
     return {
-      counter: 4,
+      counter: 7,
       input: "",
       listOne: [
         {
@@ -179,6 +179,21 @@ export default {
         {
           id: 4,
           title: "Clean the living room",
+          done: true,
+        },
+        {
+          id: 5,
+          title: "Book the hotel",
+          done: true,
+        },
+        {
+          id: 6,
+          title: "Attend the meeting",
+          done: true,
+        },
+        {
+          id: 7,
+          title: "Do the test",
           done: true,
         },
       ],
@@ -286,7 +301,11 @@ export default {
     },
     handleComputedSearchListTwo() {
       let listTwo = this.listTwo;
-      if (this.searchTwo && this.searchTwo !== undefined && this.searchTwo.length > 0) {
+      if (
+        this.searchTwo &&
+        this.searchTwo !== undefined &&
+        this.searchTwo.length > 0
+      ) {
         listTwo = listTwo.filter((task) =>
           task.title.toUpperCase().includes(this.searchTwo.toUpperCase())
         );

@@ -1,10 +1,6 @@
 <template>
   <v-app id="inspire">
-    <v-app-bar color="primary" app class="d-flex flex-column align-center">
-      <v-toolbar-title class="white--text"
-        >Todo Condor - Daniel Morán</v-toolbar-title
-      >
-    </v-app-bar>
+    <header-comp></header-comp>
 
     <v-main class="mt-10">
       <v-container>
@@ -37,10 +33,12 @@
           <v-col cols="12" md="6">
             <!-- {{ listOne }} -->
             <list-one
-              :listOne="listOne"
+              :listOne="handleComputedSearch"
+              :searching="handleSearchProp"
               @emitTaskId="handleDoneListOne($event)"
               @emitDelete="handleDeleteOne($event)"
               @emitEdit="handleEdit($event)"
+              @emitSearchValue="handleEmitSearchValue($event)"
             />
           </v-col>
         </v-row>
@@ -49,9 +47,11 @@
           <v-col cols="12" md="6">
             <!-- {{ listTwo }} -->
             <list-two
-              :listTwo="listTwo"
+              :listTwo="handleComputedSearchListTwo"
+              :searching="handleSearchPropTwo"
               @emitTaskId="handleDoneListTwo($event)"
               @emitDelete="handleDelete($event)"
+              @emitSearchValue="handleEmitSearchValueListTwo($event)"
             />
           </v-col>
         </v-row>
@@ -142,15 +142,18 @@
         </v-dialog>
       </v-row>
     </template>
+    <footer-comp />
   </v-app>
 </template>
 
 <script>
 import ListOne from "@/views/ListOne.vue";
 import ListTwo from "@/views/ListTwo.vue";
+import headerComp from "@/views/Header.vue";
+import FooterComp from "@/views/Footer.vue";
 
 export default {
-  components: { ListOne, ListTwo },
+  components: { ListOne, ListTwo, FooterComp, headerComp },
   data() {
     return {
       counter: 4,
@@ -158,24 +161,24 @@ export default {
       listOne: [
         {
           id: 1,
-          title: "Dormir",
+          title: "Take a nap",
           done: false,
         },
         {
           id: 2,
-          title: "Comer",
+          title: "Paint the house",
           done: false,
         },
         {
           id: 3,
-          title: "Caminar",
+          title: "Walk in the park",
           done: false,
         },
       ],
       listTwo: [
         {
           id: 4,
-          title: "Sentarse",
+          title: "Clean the living room",
           done: true,
         },
       ],
@@ -184,6 +187,8 @@ export default {
       currentId: 0,
       dialogEdit: false,
       currentTask: "",
+      search: null,
+      searchTwo: null,
     };
   },
   methods: {
@@ -254,10 +259,44 @@ export default {
       }
       this.dialogEdit = false;
     },
+    handleEmitSearchValue(select) {
+      this.search = select;
+    },
+    handleEmitSearchValueListTwo(select) {
+      this.searchTwo = select;
+    },
   },
   computed: {
     newTaskTitleInvalid() {
       return !this.input;
+    },
+    handleComputedSearch() {
+      let listOne = this.listOne;
+      if (this.search && this.search !== undefined && this.search.length > 0) {
+        listOne = listOne.filter((task) =>
+          task.title.toUpperCase().includes(this.search.toUpperCase())
+        );
+        return listOne;
+      } else {
+        return listOne;
+      }
+    },
+    handleSearchProp() {
+      return this.search ? true : false;
+    },
+    handleComputedSearchListTwo() {
+      let listTwo = this.listTwo;
+      if (this.searchTwo && this.searchTwo !== undefined && this.searchTwo.length > 0) {
+        listTwo = listTwo.filter((task) =>
+          task.title.toUpperCase().includes(this.searchTwo.toUpperCase())
+        );
+        return listTwo;
+      } else {
+        return listTwo;
+      }
+    },
+    handleSearchPropTwo() {
+      return this.searchTwo ? true : false;
     },
   },
 };

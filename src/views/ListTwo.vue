@@ -83,6 +83,6 @@ export default {
 </script>
 <style>
 .hover:hover{
-  cursor: pointer !important;
+  cursor: pointer;
 }
 </style>

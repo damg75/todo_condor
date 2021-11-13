@@ -1,7 +1,7 @@
 # todo_condor
 
 ## Project setup
-```
+``` 
 npm install
 ```
 

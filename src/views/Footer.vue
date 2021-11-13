@@ -1,12 +1,12 @@
 <template>
-  <v-footer >
+  <v-footer color="primary" class="white--text"> 
     <v-row dense>
       <v-col class="text-center" cols="12" color="primary">
-        {{ currentYear }} — <strong>Daniel Morán</strong>
+        {{ currentYear }} — Daniel Morán
       </v-col>
       <v-col class="text-center" cols="12" color="primary">
         <div class="d-flex flex-row justify-center align-baseline">
-          <v-icon small>mdi-clock</v-icon>
+          <v-icon small class="white--text">mdi-clock</v-icon>
           <div>{{ hours }}</div>
           <div>{{ minutes }}</div>
           <div>{{ seconds }}</div>
